@@ -1,0 +1,42 @@
+{% extends "library/base.html" %}
+{% load static %}
+{% block title %}
+{% if review %}{{ review.title }}{% else %}Review{% endif %}
+{% endblock %}
+{% block content %}
+<div class="container">
+    <span style="font-weight: 500; font-size: larger; color: rgb(218, 40, 40);">{{ blog.title|title }} </span> <br>
+    <div class="container">
+        {{ review.content|linebreaks }}
+    </div>
+    <h3>Book: <a href="{{ review.book.get_book_url }}"> {{review.book.title}} </a></h3>
+
+    <div style="margin-bottom: 70px;">
+        <span style="color: rgb(143, 40, 40);">{{ comments.count }} comments</span> <br>
+        {% if comments %}
+        {% for comment in comments %}
+            <div class="comments" style="padding: 1px;">
+                <div class="font-weight-bold">
+                    <b>{{ comment.user }}:</b> {{ comment.text | linebreaks }}
+                    <hr>
+                </div>
+            </div>
+        {% endfor %}
+        {% else %}
+        <p>Say something.</p>
+        {% endif %}
+        {% if new_comment %}
+        <div class="alert alert-success" role="alert">
+            wow
+        </div>
+        {% else %}
+            <h3>Say something</h3>
+            <form method="post" style="margin-top: 1.3em;" action=".">
+                {{ comment_form.as_p }}
+                {% csrf_token %}
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+            {% endif %}
+    </div>
+</div>
+{% endblock %}

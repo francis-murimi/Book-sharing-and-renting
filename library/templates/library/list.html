@@ -1,0 +1,44 @@
+{% extends "library/base.html" %}
+{% load static %}
+{% block title %}
+{% if category %}{{ genre.name }} {% else %} Book Reviews {% endif %}
+{% endblock %}
+{% block content %}
+<br>
+<!-- Use any element to open the sidenav -->
+<span onclick="openNav()" style="background-color: cornflowerblue; border: 2px solid black; border-radius: 4px; padding: 5px; margin-top: 0px;"title="Choose category">Genre</span>
+<div id="mySidenav" class="sidenav">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()" >&times;</a>
+    <ul> 
+        <li {% if not genre %}class="selected"{% endif %}>
+            <a href="{% url  'library:home' %}">All</a>
+        </li>
+        {% for genre in genres %}
+        <li {% if genre.name == genre.name %}class="selected"{% endif %}>
+            <a href="{{ genre.get_absolute_url }}">{{ genre.name }}</a>
+        </li>
+        {% endfor %}
+    </ul>
+</div> 
+<div class="container">
+    <div>
+        {% if genre %} <h3>{{ genre.name }}</h3> <br>
+        <article>
+            {{ genre.description }}
+        </article> <hr>
+        {% else %} <h3>Reviews</h3> {% endif %}
+        {% for review in reviews %}
+        <div>
+            <div tabindex="-1">
+                <a href="{{ review.get_review_url }}"> 
+                    <span style="color: rgb(214, 39, 39); font-size: larger; font-weight: 500;">{{ review.title }} </span>
+                </a> <br>
+                {{review.book.title}} <br>
+                <hr>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+    
+{% endblock %}

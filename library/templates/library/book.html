@@ -1,0 +1,53 @@
+{% extends "library/base.html" %}
+{% load static %}
+{% block title %}
+{% if book %}{{ book.title }}{% else %}Book{% endif %}
+{% endblock %}
+{% block content %}
+<div class="container">
+    <h2> {{ book.title }} </h2>
+    <a href="{{ book.book_booking_url }}"> Borrow book</a> <br>
+    <h3>Pages: {{book.pages}}</h3>
+    <h3>Chapters: {{book.chapters}}</h3>
+    <h3>Author: 
+        {% for author in book.author.all %}
+            <a href="{{ author.get_author_url }}">{{ author}} </a> <br>
+        {% endfor %}
+    </h3>
+    <h3>Genre:
+        {% for genre in book.genre.all %}
+        <a href="{{ genre.get_genre_books }}">{{ genre }}</a>
+        {% endfor %}
+    </h3>
+    <div>
+        {{ book.description|linebreaks }}
+    </div>
+    <div style="margin-bottom: 70px;">
+        <span style="color: rgb(143, 40, 40);">{{ comments.count }} comments</span> <br>
+        {% if comments %}
+        {% for comment in comments %}
+            <div class="comments" style="padding: 1px;">
+                <div class="font-weight-bold">
+                    <b>{{ comment.user }}:</b> {{ comment.text | linebreaks }}
+                    <hr>
+                </div>
+            </div>
+        {% endfor %}
+        {% else %}
+        <p>Say something.</p>
+        {% endif %}
+        {% if new_comment %}
+        <div class="alert alert-success" role="alert">
+            wow
+        </div>
+        {% else %}
+            <h3>Say something</h3>
+            <form method="post" style="margin-top: 1.3em;" action=".">
+                {{ comment_form.as_p }}
+                {% csrf_token %}
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+            {% endif %}
+    </div>
+</div>
+{% endblock %}

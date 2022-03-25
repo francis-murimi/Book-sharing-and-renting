@@ -1,0 +1,18 @@
+{% extends "library/base.html" %}
+{% load static %}
+{% block title %}
+{% if author %}{{ author.name }}{% else %}Author{% endif %}
+{% endblock %}
+{% block content %}
+<div class="container">
+    <span>{{ author.name }} </span> <br>
+    Nationality: {{ author.nationality }}
+    <div>
+        <h2> Published Books </h2>
+        {% for book in books %}
+        <a href="{{ book.get_book_url }}"> {{book}} </a> <br>
+        {% endfor %}
+    </div>
+    
+</div>
+{% endblock %}

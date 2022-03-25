@@ -1,0 +1,14 @@
+{% extends "library/base.html" %}
+{% load static %}
+{% block title %}
+{% if bookings %}{{ request.user }} Bookings{% else %}Booking{% endif %}
+{% endblock %}
+{% block content %}
+Book: {{booking.book}} <br>
+Payed: {{booking.payed}} <br>
+Booking date: {{booking.booking_date}} <br>
+Delivered: {{booking.delivered_state}} <br>
+Delivery date: {{booking.delivery_date}} <br>
+Return date: {{booking.return_date}}<br>
+Returned: {{booking.returned_state}} <br>
+{% endblock %}

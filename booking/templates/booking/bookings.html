@@ -1,0 +1,15 @@
+{% extends "library/base.html" %}
+{% load static %}
+{% block title %}
+{% if bookings %}{{ request.user }} Bookings{% else %}Booking{% endif %}
+{% endblock %}
+{% block content %}
+<h3>My bookings</h3>
+{% if bookings %}
+    {% for booking in bookings%}
+    <a href="{{ booking.get_booking_url }}">{{booking.book}} </a> <br>
+    {% endfor %}
+{% else %}
+    You do not have any booking.
+{% endif %}
+{% endblock %}

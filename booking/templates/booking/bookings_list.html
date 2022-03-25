@@ -1,0 +1,26 @@
+{% extends "booking/base.html" %}
+{% load static %}
+{% block title %}
+Bookings List
+{% endblock %}
+{% block content %}
+    {% if bookings %}
+    {% for booking in bookings %}
+    <div>
+        {{booking.user}} <br>
+        {{booking.book}} <br>
+        {{booking.kitabu}} <br>
+        Booking date: {{booking.booking_date}} <br>
+        Delivery date: {{booking.delivery_date}} <br>
+        Delivered : {{booking.delivered_state|yesno}} <br>
+        Booking type: {{booking.get_booking_type_display}}, Duration {{booking.duration}} <br>
+        Return date: {{booking.return_date}} <br>
+        Returned: {{booking.returned_state|yesno}} <br>
+        <a href="{{ booking.get_booking_detail }}">Process</a>
+        <hr>
+    </div>
+    {% endfor %}
+    {% else %}
+    <h3>All books have been returned.</h3>
+    {% endif %}
+{% endblock%}
